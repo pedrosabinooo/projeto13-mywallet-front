@@ -11,9 +11,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
 }
 
 body::-webkit-scrollbar {
   display: none;
+}
+
+body>* {
+  width: 326px;
 }

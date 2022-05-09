@@ -7,14 +7,6 @@ const ContainerInitial = styled.div`
   justify-content: center;
   height: 100vh;
 
-  * {
-    width: 303px;
-  }
-
-  .new-entry {
-    align-items: top;
-  }
-
   img {
     width: 180px;
     margin-bottom: 40px;
@@ -26,7 +18,6 @@ const ContainerInitial = styled.div`
     font-size: 26px;
     line-height: 31px;
     color: #ffffff;
-
   }
 
   form {
@@ -34,6 +25,7 @@ const ContainerInitial = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
     row-gap: 13px;
   }
 
@@ -42,6 +34,7 @@ const ContainerInitial = styled.div`
     background: #ffffff;
     border: none;
     box-sizing: border-box;
+    width: 100%;
     border-radius: 5px;
     height: 58px;
     font-size: 20px;
@@ -58,6 +51,7 @@ const ContainerInitial = styled.div`
     border-radius: 5px;
     border: none;
     height: 46px;
+    width: 100%;
     font-style: normal;
     font-weight: 700;
     font-size: 20px;

@@ -4,41 +4,46 @@ import { useNavigate } from "react-router-dom";
 
 import UserContext from "./../contexts/UserContext";
 
-import Container from "./layout/ContainerInitial";
+import Container from "./layout/Container";
 
 function NewEntry() {
   const navigate = useNavigate();
 
-  const { userInfo, setUserInfo, transactionInfo, setTransactionInfo } = useContext(UserContext);
+  const { userInfo, transactionInfo, setTransactionInfo } =
+    useContext(UserContext);
 
-  function login(event) {
+  function postNewEntry(event) {
     event.preventDefault();
-    const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`;
-    const promise = axios.post(URL, {
+    const URL = `http://localhost:5000/new-entry`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const promise = axios.post(
+      URL,
+      {
         value: transactionInfo.value,
         description: transactionInfo.description,
         type: transactionInfo.type,
-    });
-    promise.then(({ data }) => {
-      setUserInfo({
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        token: data.token,
-      });
+      },
+      config
+    );
+    promise.then(() => {
       navigate("/");
     });
     promise.catch((err) => {
-      console.log(err.response.statusText)
-      alert("Can't sign in to your account. Check your email and password.")
+      console.log(err.response.statusText);
+      alert("Can't save the new entry. Please try again later.");
     });
   }
 
   return (
-    <Container className="new-entry">
-      <span>New entry</span>
-      <form onSubmit={login}>
+    <Container>
+      <header>
+        <span>New entry</span>
+      </header>
+      <form onSubmit={postNewEntry}>
         <input
           type="number"
           id="value"
@@ -53,7 +58,10 @@ function NewEntry() {
           id="description"
           placeholder="description"
           onChange={(e) =>
-            setTransactionInfo({ ...transactionInfo, description: e.target.value })
+            setTransactionInfo({
+              ...transactionInfo,
+              description: e.target.value,
+            })
           }
           required
         />

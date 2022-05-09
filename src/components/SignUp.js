@@ -11,19 +11,23 @@ function SignUp() {
     email: "",
     password: "",
     passwordConfirmation: "",
+    token: "",
   });
   const navigate = useNavigate();
 
   function Signup(event) {
     if (loginInfo.password===loginInfo.passwordConfirmation) {
       event.preventDefault();
-      const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`;
+      const URL = `http://localhost:5000/signup`;
       const promise = axios.post(URL, {
         name: loginInfo.name,
         email: loginInfo.email,
         password: loginInfo.password,
       });
-      promise.then(() => navigate("/"));
+      promise.then(() => {
+        getTransactions();
+        navigate("/login")
+      });
       promise.catch((err) => {
         console.log(err.response.statusText);
         alert("Can't sign up");

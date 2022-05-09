@@ -8,31 +8,29 @@ import Logo from "./../assets/img/logo.svg";
 import Container from "./layout/ContainerInitial";
 
 function LogIn() {
-  const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
-  const { setUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   function login(event) {
     event.preventDefault();
-    const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`;
+    const URL = `http://localhost:5000/login`;
     const promise = axios.post(URL, {
       email: loginInfo.email,
       password: loginInfo.password,
     });
     promise.then(({ data }) => {
-      setUserInfo({
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        token: data.token,
-      });
-      navigate("/habits");
+      setUserInfo({ ...loginInfo, token: data.token, name: data.name });
+      console.log(loginInfo, userInfo);
+      navigate("/");
     });
     promise.catch((err) => {
-      console.log(err.response.statusText)
-      alert("Can't sign in to your account. Check your email and password.")
+      console.log(err.response.statusText);
+      alert("Can't sign in to your account. Check your email and password.");
     });
   }
 
